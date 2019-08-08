@@ -3,13 +3,12 @@ package com.stackemhigh.imageview
 import android.net.Uri
 import java.io.Serializable
 
-class ImageData(uriData: Uri) : Serializable {
-    var uriData = uriData
-        private set
-    fun setUri(): String {
-        return uriData.toString()
+class ImageData : Serializable {
+    private var uriPath: String? = null
+    fun getUriPath(): Uri {
+        return Uri.parse(uriPath)
     }
-    fun getUri(): Uri {
-        return Uri.parse(setUri())
+    fun setUriPath(uri: Uri) {
+        uriPath = uri.toString()
     }
 }
