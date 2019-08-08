@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Initialize mutable list to store Image Data
-    private val stringUriList = mutableListOf<String>()
+    private val imageDataList = mutableListOf<ImageData>()
 
     private var index: Int = -1
 
@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        // During on resume lifecycle, refreshes scroll view's child layout
-        // with fresh list of Image Data
+        // During on resume lifecycle, will add a TextView to the UI in the event that
+        // the user selected an image.
         if (dataWasPassed) {
             populateScrollView()
             dataWasPassed = false
@@ -59,15 +59,25 @@ class MainActivity : AppCompatActivity() {
 
     // Populates the scroll views' child LinearLayout with data
     fun populateScrollView() {
-        val view = createTextView(stringUriList[index], index)
+        val view = createTextView(imageDataList[index].toString(), index)
         scroll_view_layout.addView(view)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            // Retrieve ImageData
             println("onActivityResult data: " + data?.data)
-            stringUriList.add(data?.data.toString())
+
+            // Creates a null ImageData object
+            val imageData = ImageData()
+
+            // Uses the ImageData setter to set data
+            imageData.setUriPath(data?.data)
+
+            // Adds the ImageData to the list
+            imageDataList.add(imageData)
+
+            // Increases index by increment of 1 to track elements of the list where this
+            // data is stored.
             index++
 
             // Allow for onResume override to issue populateScrollView()

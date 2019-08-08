@@ -8,7 +8,7 @@ class ImageData : Serializable {
     fun getUriPath(): Uri {
         return Uri.parse(uriPath)
     }
-    fun setUriPath(uri: Uri) {
+    fun setUriPath(uri: Uri?) {
         uriPath = uri.toString()
     }
 }
