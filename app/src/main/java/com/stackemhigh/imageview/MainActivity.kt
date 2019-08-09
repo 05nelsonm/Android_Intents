@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val IMAGE_REQUEST_CODE = 3324
+        val STRING_DATA_KEY = "poiub24h972qb4toquh0kbfuio"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     private var index: Int = -1
 
+    private val context = this
+
     // Initialize Boolean value as false for use in cases of app initially starting
     // as well as if the user selects the back button instead of selecting an image
     var dataWasPassed: Boolean = false
@@ -50,15 +53,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Programmatic construction of a TextView
-    fun createTextView(stringUri: String, index: Int): TextView {
+    private fun createTextView(stringUri: String, index: Int): TextView {
         val view = TextView(this)
+
+        view.setOnClickListener {
+            val imageTag = imageDataList[index]
+            val intent = Intent(this, ImageDetailsActivity::class.java)
+            imageTag.getUriPath()
+            intent.putExtra(STRING_DATA_KEY, imageTag)
+            startActivity(intent)
+            println(intent)
+        }
+
         view.text = "$stringUri, $index"
         view.textSize = 18f
         return view
     }
 
     // Populates the scroll views' child LinearLayout with data
-    fun populateScrollView() {
+    private fun populateScrollView() {
         val view = createTextView(imageDataList[index].toString(), index)
         scroll_view_layout.addView(view)
     }
