@@ -96,7 +96,5 @@ class MainActivity : AppCompatActivity() {
             // Allow for onResume override to issue populateScrollView()
             dataWasPassed = true
         }
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 }
